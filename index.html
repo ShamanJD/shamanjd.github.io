@@ -13,7 +13,7 @@
 
     const targetPage = await bgFetch.match(url);
     const response = await targetPage.responseReady;
-    console.log("Background Fetch:", await response.text()); // contains cookie
+    console.log("Background Fetch:", await response.text());  // contains cookie
 
     const normalFetch = await fetch(request);
     console.log("Fetch:", await normalFetch.text()); // no cookie
